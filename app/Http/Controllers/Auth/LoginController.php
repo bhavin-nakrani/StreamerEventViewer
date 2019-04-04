@@ -47,7 +47,7 @@ class LoginController extends Controller
     public function redirectToProvider()
     {
         return Socialite::driver('twitch')
-            ->setScopes(['user:read:email', 'channel:read:subscriptions', 'user:edit', 'user:read:broadcast'])
+            ->setScopes(['user:read:email', 'channel:read:subscriptions', 'user:edit', 'user:read:broadcast', 'user_read'])
             ->redirect();
     }
 
@@ -66,9 +66,7 @@ class LoginController extends Controller
             'email' => $twitchUser->email,
         ]);
 
-        //$user = new User;
         $user->name = $twitchUser->name;
-        //$user->email = $twitchUser->email;
         $user->password = bcrypt('admin@123');
         $user->created_at = $now;
         $user->updated_at = $now;
