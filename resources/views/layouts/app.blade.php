@@ -43,11 +43,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            @if (Route::has('register'))
+                            {{--@if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                            @endif
+                            @endif--}}
                         @else
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
@@ -85,27 +85,22 @@
                     @if (session('flash_success'))
                         <div class="style-msg successmsg">
                             <div class="sb-msg"><i class="icon-thumbs-up"></i><strong>Well done!</strong> {{ session('flash_success') }}</div>
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         </div>
                     @elseif (session('flash_error'))
                         <div class="style-msg errormsg">
                             <div class="sb-msg"><i class="icon-remove"></i><strong>Oh snap!</strong> {{ session('flash_error') }}</div>
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         </div>
                     @elseif (session('flash_info'))
                         <div class="style-msg infomsg">
                             <div class="sb-msg"><i class="icon-info-sign"></i><strong>Heads up!</strong> {{ session('flash_info') }}</div>
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         </div>
                     @elseif (session('flash_alert'))
                         <div class="style-msg alertmsg">
                             <div class="sb-msg"><i class="icon-warning-sign"></i><strong>Warning!</strong> {{ session('flash_alert') }}</div>
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         </div>
                     @elseif (session('flash_note'))
                         <div class="style-msg style-msg-light">
                             <div class="sb-msg"><i class="icon-question-sign"></i>{{ session('flash_note') }}</div>
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         </div>
                     @endif
                 </div>
@@ -114,5 +109,6 @@
             @yield('content')
         </main>
     </div>
+    @yield('js')
 </body>
 </html>

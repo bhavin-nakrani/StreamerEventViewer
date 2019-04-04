@@ -24,14 +24,12 @@
                             </thead>
                             <tbody>
                             @if(!empty($streams))
-
                                 @foreach($streams as $stream)
                                     <tr>
                                         <td><img src="{{ $stream['image'] }}" alt="image" width="100"></td>
                                         <td>{{ $stream['title'] }}</td>
                                         <td>
                                             <a href="{{ route('stream_detail', ['id' => $stream['id']]) }}" class="btn btn-info">Detail</a>
-
                                         </td>
                                     </tr>
                                 @endforeach
