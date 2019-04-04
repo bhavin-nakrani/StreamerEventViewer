@@ -104,7 +104,17 @@ class HomeController extends Controller
         $stream = Stream::find($id);
 
         $client = new Client();
-        $result = $client->get('https://api.twitch.tv/kraken/channels/'.$stream->channel_id.'/videos?limit=10', [
+
+        $eventResult = $client->get('https://api.twitch.tv/v5/channels/'.$stream->stream_id.'/events', [
+            'headers' => [
+                'Accept' => 'application/vnd.twitchtv.v5+json',
+                'Client-ID' => 'r9m4afraos9fztk6om80ku8492yqws',
+            ]
+        ]);
+        $eventRes = \GuzzleHttp\json_decode($eventResult->getBody()->getContents());
+        $event = empty($eventRes->events) ? 'No Events found' :$eventRes->events;
+
+        $result = $client->get('https://api.twitch.tv/kraken/channels/'.$stream->channel_id.'/videos?limit=6', [
             'headers' => [
                 'Accept' => 'application/vnd.twitchtv.v5+json',
                 'Client-ID' => 'r9m4afraos9fztk6om80ku8492yqws',
@@ -122,7 +132,6 @@ class HomeController extends Controller
                 ];
         }
 
-
-        return view('stream_detail', ['videos' => $videos, 'stream' => $stream]);
+        return view('stream_detail', ['videos' => $videos, 'stream' => $stream, 'event' => $event]);
     }
 }

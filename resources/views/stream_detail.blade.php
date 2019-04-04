@@ -13,9 +13,9 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                            <div class="row">
-                                <div id="twitch-embed"></div>
-                            <div>
+
+                            <div id="twitch-embed"></div>
+
                             <script src="https://embed.twitch.tv/embed/v1.js"></script>
 
                             <!-- Create a Twitch.Embed object that will render within the "twitch-embed" root element. -->
@@ -48,9 +48,11 @@
                                 @endforeach
                             @endif
                         </div>
-                        <div class="col-md-4">
 
+                        <div class="row">
+                            {{ $event }}
                         </div>
+
                     </div>
                 </div>
             </div>

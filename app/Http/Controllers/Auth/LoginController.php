@@ -59,7 +59,6 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         $twitchUser = Socialite::driver('twitch')->user();
-
         $now = \Carbon\Carbon::now();
 
         $user = User::firstOrNew([
@@ -70,6 +69,7 @@ class LoginController extends Controller
         $user->password = bcrypt('admin@123');
         $user->created_at = $now;
         $user->updated_at = $now;
+        $user->twitch_token = $twitchUser->token;
         $user->save();
 
         Auth::login($user);
