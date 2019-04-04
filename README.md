@@ -1,71 +1,61 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## About Task
 
-## About Laravel
+I used Laravel web application framework. I used extra bundles for implement this functionality
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Guzzlehttp
+- twitch
+- doctrine/dbal
+- IDE helper
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Bootstrap is used for Design layout. JS and CSS (Sass) are generate through webpack from resource to public access.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Auth bundle is default used and implemented Twitch Api for user login.
 
-## Learning Laravel
+## Work Flow
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Login with Twitch account
+2. In Dashboard, Featured Channels list are showing through API
+3. By click on "Favourite" button, Channel is store in database. (If already exist in database then you will see exist validation message)
+4. In menu, "Favourite Channel" is showing stored Channel list.
+5. By click on "Detail" button, you will redirect to Stream Detail page.
+- First section, Streaming video and chat are display
+- Second section, 6 videos are showing form selected Stream
+- Third section, No Event found message because in new Twitch API, there is no officially code to get Event. I used old API code, but there is no event in all streams so simple I displayed response there.
+6. Top right menu, User can logout from system
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost you and your team's skills by digging into our comprehensive video library.
+## Questions
 
-## Laravel Sponsors
+1. How would you deploy the above on AWS? (ideally a rough architecture diagram will help)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Below services should be use for this system.
+* Route53
+* EC2
+* RDS (optional)
+* S3 (optional)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
+  First, Create new EC2 instance with minimum configuration (Depend on usage). Then Install Linux, Nginx, PHP, MySql.
 
-## Contributing
+  Set proper host directory with "var/www/html" and then get git clone of repository.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+  Install all dependency of project using composer
 
-## Security Vulnerabilities
+  Install all node dependency using node install and then run "npm run production" for generate js and css from webpack
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+  Set proper env variable values
 
-## License
+  Create database using RDS or in EC2 server
 
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+  Test with EC2 public IP
+
+  After this setup zone file of domain name in Route53. Then you have to select EC2 instance endpoint.
+
+  Wait for sometime to configure domain with instance and you will access project.
+
+2. Where do you see bottlenecks in your proposed architecture and how would you approach scaling this app starting from 100 reqs/day to 900MM reqs/day over 6 months?
+
+Setup Load Balancer for EC2 instance and make copy of this server. So we have 2 EC2 server under load balancer. Change endpoint to load balancer endpoint in host zone file in Route53.
+
+Now your domain pointed with Load balancer so it will handle more requests with 2 servers. After continues monitor with CloudWatch, we can add more copy servers under Load balancer
+
+Other way is use Redis database in ElastiCache. It's provide in memory space and very fast to get value back.
