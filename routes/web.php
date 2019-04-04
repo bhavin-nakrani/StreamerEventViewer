@@ -21,3 +21,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('login/twitch', 'Auth\LoginController@redirectToProvider')->name('twitch_login');
+Route::get('login/twitch/callback', 'Auth\LoginController@handleProviderCallback')->name('twitch_callback');

@@ -55,6 +55,11 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    {{--<form id="logout-form" action="{{ route('logout') }}" method="post">
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-outline-danger btn-sm mt-3">Logout</button>
+                                    </form>--}}
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

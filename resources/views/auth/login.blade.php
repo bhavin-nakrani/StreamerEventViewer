@@ -65,6 +65,15 @@
                             </div>
                         </div>
                     </form>
+
+                    <form method="GET" action="{{ route('twitch_login') }}">
+                        @csrf
+                        <div class="form-group row mb-0">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Login') }}
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

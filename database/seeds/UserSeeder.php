@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         if(DB::table('users')->get()->count() == 0){
             DB::table('users')->insert([
                 'name' => 'Bhavin Nakrani',
-                'email' => 'bhavin.it8488@gmail.com',
+                'email' => 'bhavin@gmail.com',
                 'password' => bcrypt('admin@123'),
                 'created_at' => $now,
                 'updated_at' => $now,
