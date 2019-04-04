@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'StreamerEventViewer'),
 
     /*
     |--------------------------------------------------------------------------
@@ -177,6 +177,7 @@ return [
 
         // Socialite
         \SocialiteProviders\Manager\ServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
     ],
 

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'StreamerEventViewer') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'StreamerEventViewer') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -49,16 +49,18 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('stream') }}">Favorite Channel</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    {{--<form id="logout-form" action="{{ route('logout') }}" method="post">
-                                        {{ csrf_field() }}
-                                        <button type="submit" class="btn btn-outline-danger btn-sm mt-3">Logout</button>
-                                    </form>--}}
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -78,6 +80,37 @@
         </nav>
 
         <main class="py-4">
+            <section class="mt-3">
+                <div class="container clearfix">
+                    @if (session('flash_success'))
+                        <div class="style-msg successmsg">
+                            <div class="sb-msg"><i class="icon-thumbs-up"></i><strong>Well done!</strong> {{ session('flash_success') }}</div>
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        </div>
+                    @elseif (session('flash_error'))
+                        <div class="style-msg errormsg">
+                            <div class="sb-msg"><i class="icon-remove"></i><strong>Oh snap!</strong> {{ session('flash_error') }}</div>
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        </div>
+                    @elseif (session('flash_info'))
+                        <div class="style-msg infomsg">
+                            <div class="sb-msg"><i class="icon-info-sign"></i><strong>Heads up!</strong> {{ session('flash_info') }}</div>
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        </div>
+                    @elseif (session('flash_alert'))
+                        <div class="style-msg alertmsg">
+                            <div class="sb-msg"><i class="icon-warning-sign"></i><strong>Warning!</strong> {{ session('flash_alert') }}</div>
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        </div>
+                    @elseif (session('flash_note'))
+                        <div class="style-msg style-msg-light">
+                            <div class="sb-msg"><i class="icon-question-sign"></i>{{ session('flash_note') }}</div>
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        </div>
+                    @endif
+                </div>
+            </section>
+
             @yield('content')
         </main>
     </div>
